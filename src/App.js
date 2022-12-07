@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useReducer, useState } from "react"
+
+import "./App.css";
+import { AppContext, appReducer, initialState } from "./utills"
+import SearchContainer from "./components/SearchContainer"
+import MapWrapper from "./components/MapWrapper"
+import { googleMapsApiConfig } from "./constant";
 
 function App() {
+  const value = useReducer(appReducer, initialState)
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContext.Provider value={value}>
+      <div className='container'>
+        <SearchContainer />
+        <MapWrapper />
+        {/* <Wrapper {...googleMapsApiConfig}>
+            <Map/>
+        </Wrapper> */}
+      </div>
+    </AppContext.Provider>
+    
   );
 }
 
 export default App;
+

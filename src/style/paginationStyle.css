@@ -1,0 +1,37 @@
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 2px;
+  }
+  
+  .page-controls {
+    display: flex;
+    width: 40%;
+    justify-content: space-evenly;
+  }
+  .page-controls input {
+    width: 1.5rem;
+  }
+  
+  .page-btn {
+    border: 1px solid gray;
+    background-color: #f1ecec;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+  }
+  .prev, .next {
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+    font-size: 1rem;
+  }
+  .prev::before {
+    content: "\02C2";
+  }
+  
+  .next::before {
+    content: "\02C3";
+  }
