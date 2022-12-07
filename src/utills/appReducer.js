@@ -1,5 +1,5 @@
 import { searchActions, filterActions } from "../constant"
-import { getFilteredResult, getFilteredMarker } from "../utills"
+import { getFilteredResult, getFilteredMarker, updateFilterFromMap } from "../utills"
 const filterInitialState = {
     bedRoomMin: 0,
     bedRoomMax: 0,
@@ -18,6 +18,7 @@ export const initialState = {
   filterResult: [],
   showFilter: false,
   isFilterActive: false,
+  isMapFilter: false,
   filters: filterInitialState,
   mapMarkers: [],
 };
@@ -33,6 +34,10 @@ export const appReducer = (state, action) => {
       return {...state, mapMarkers: [...getFilteredMarker(state.filterResult)]}
     case searchActions.RESET_MAP_MARKER:
       return {...state, mapMarkers: [...getFilteredMarker(state.searchResult)]}
+    case searchActions.UPDATE_FILTER_RESULT_MAP_ACTION:
+      return {...state, filterResult: [...updateFilterFromMap(action.payload, state.searchResult)], isMapFilter: true}
+    case searchActions.RESET_FILTER_RESULT_MAP_ACTION:
+      return {...state, filterResult: [], isMapFilter: false}
     case filterActions.UPDATE_FILTER_RESULT:
       return {...state, filterResult: action.payload}
     case filterActions.SHOW_FILTER:

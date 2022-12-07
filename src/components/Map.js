@@ -10,8 +10,7 @@ import {
     MarkerClusterer,
 } from '@react-google-maps/api'
 
-function Map({ geoCodeList }) {
-
+function Map({ geoCodeList, dispatch }) {
     const mapRef = useRef()
     const center = useMemo(() => {
         console.log('geoCodeList:-', geoCodeList);
@@ -54,6 +53,14 @@ function Map({ geoCodeList }) {
         // console.log("geoCodeInsideRectangle:-", geoCodeInsideRectangle);
         if(geoCodeInsideRectangle.length > 0) {
             // setMapFilterMarker(geoCodeInsideRectangle);
+            console.log("geoCodeInsideRectangle:-", geoCodeInsideRectangle);
+            dispatch({
+                type: searchActions.UPDATE_FILTER_RESULT_MAP_ACTION, payload: geoCodeInsideRectangle
+            })
+        } else {
+            dispatch({
+                type: searchActions.RESET_FILTER_RESULT_MAP_ACTION
+            })
         }
     }
 

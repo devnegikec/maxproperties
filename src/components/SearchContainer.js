@@ -9,8 +9,8 @@ import "../style/SearchContainer.css";
 
 function SearchContainer() {
     const [state, dispatch] = useContext(AppContext);
-    const {searchResult, filterResult, showFilter, isFilterActive} = state;
-    const results = isFilterActive ? filterResult : searchResult;
+    const {searchResult, filterResult, showFilter, isFilterActive, isMapFilter} = state;
+    const results = (isFilterActive || isMapFilter) ? filterResult : searchResult;
     const handleFilter = () => {
         dispatch({
             type: filterActions.SHOW_FILTER, payload: true

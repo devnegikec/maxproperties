@@ -11,7 +11,7 @@ function MapWrapper() {
 
     return (
         <Wrapper {...googleMapsApiConfig}>
-            <Map geoCodeList={mapMarkers} />
+            <Map geoCodeList={mapMarkers} dispatch={dispatch} />
         </Wrapper> 
     )
 }

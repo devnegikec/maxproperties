@@ -1,6 +1,6 @@
 import { appReducer, initialState } from "./appReducer"
 import { AppContext } from "./contextUtills"
-import { getStarWidth, getFilteredResult, getFilteredMarker } from "./utility"
+import { getStarWidth, getFilteredResult, getFilteredMarker, updateFilterFromMap } from "./utility"
 
 export {
     initialState,
@@ -8,5 +8,6 @@ export {
     AppContext,
     getStarWidth,
     getFilteredResult,
-    getFilteredMarker
+    getFilteredMarker,
+    updateFilterFromMap,
 }

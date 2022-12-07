@@ -66,3 +66,10 @@ export const getFilteredMarker = (markersData) => {
   });
   return listingsGeoCode;
 }
+
+export const updateFilterFromMap = (markers, results) => {
+  const newGeoResults = results.filter(result => {
+    return markers.indexOf(result.listingNumber) !== -1;
+  })
+  return newGeoResults;
+}
