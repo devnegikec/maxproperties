@@ -5,10 +5,8 @@ import { searchActions, filterActions } from "../constant"
 import {
     GoogleMap,
     Marker,
-    Circle,
     InfoWindow,
     DrawingManager,
-    MarkerClusterer,
 } from '@react-google-maps/api'
 
 function Map() {
@@ -93,14 +91,15 @@ function Map() {
         }
     }
 
+
     return useMemo(() => {
-        return (
-            <div className='map'>
-                    <GoogleMap
+        console.log("in memo")
+        return (<GoogleMap
                         zoom={10}
                         center={center}
                         mapContainerClassName='map-container'
                         options={options}
+                        onClick={() => setActiveMarker(null)}
                         onLoad={onLoad}
                     >
                         {mapMarkers.map((marker, index) => {
@@ -122,8 +121,7 @@ function Map() {
                         })}
                         <DrawingManager onLoad={onLoadDM} onRectangleComplete={onRectangleComplete} />
                     </GoogleMap>
-            </div> 
-        )
+                )
     }, [mapMarkers, activeMarker])
 }
 
