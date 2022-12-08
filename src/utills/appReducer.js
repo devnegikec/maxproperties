@@ -20,6 +20,7 @@ export const initialState = {
   isFilterActive: false,
   isMapFilter: false,
   filters: filterInitialState,
+  scrollToId: null,
   mapMarkers: [],
 };
 
@@ -42,6 +43,8 @@ export const appReducer = (state, action) => {
       return {...state, filterResult: action.payload}
     case filterActions.SHOW_FILTER:
       return {...state, showFilter: action.payload}
+    case searchActions.SCROLL_TO_VIEW:
+      return {...state, scrollToId: action.payload}
     case filterActions.INCREMENT_BEDROOM_MIN:
       return {...state, filters: {...state.filters, bedRoomMin: state.filters.bedRoomMin +1 }}
     case filterActions.DECREMENT_BEDROOM_MIN:

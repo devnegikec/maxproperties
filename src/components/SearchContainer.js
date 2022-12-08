@@ -9,13 +9,30 @@ import "../style/SearchContainer.css";
 
 function SearchContainer() {
     const [state, dispatch] = useContext(AppContext);
-    const {searchResult, filterResult, showFilter, isFilterActive, isMapFilter} = state;
+    const {searchResult, filterResult, showFilter, isFilterActive, isMapFilter, scrollToId} = state;
     const results = (isFilterActive || isMapFilter) ? filterResult : searchResult;
     const handleFilter = () => {
         dispatch({
             type: filterActions.SHOW_FILTER, payload: true
         })
     }
+
+    const refsById = useMemo(() => {
+        const refs = {}
+        results.forEach((result) => {
+            refs[result.listingNumber] = React.createRef(null)
+        })
+        return refs
+    }, [results])
+
+    useEffect(() => {
+        if (scrollToId) {
+            refsById[scrollToId].current.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+              });
+        }
+    }, [scrollToId])
 
     useEffect(() => {
         axios
@@ -24,7 +41,13 @@ function SearchContainer() {
                 const listingsGeoCode = []
                
                 res.data.data.results.listings.forEach(result => {
-                    listingsGeoCode.push({lat: result.geoCode.latitude, lng: result.geoCode.longitude, id: result.listingNumber})
+                    listingsGeoCode.push({
+                        lat: result.geoCode.latitude,
+                        lng: result.geoCode.longitude,
+                        id: result.listingNumber,
+                        title: result.propertyMetadata.headline,
+                        show: false
+                    })
                 });
                 dispatch({
                     type: searchActions.UPDATE_SEARCH_RESULT, payload: res.data.data.results.listings
@@ -62,7 +85,7 @@ function SearchContainer() {
                 </div>
                 {
                     results.map(result => {
-                        return (<div className='properties-list' key={result.listingId}>
+                        return (<div className='properties-list' key={result.listingId} ref={refsById[result.listingNumber]}>
                             <input type="checkbox" id="" name=""/>
                             <img src={result.images[0]?.c6_uri}></img>
                             <div className='properties-details'>

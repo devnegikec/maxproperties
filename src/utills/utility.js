@@ -10,7 +10,7 @@ export const getFilteredResult = (searchResult, filters) => {
   const results = searchResult
                       .filter(result => {
                           // console.log('bedroom:-', result.bedrooms, filters.bedRoomMin, filters.bedRoomMax);
-                          if (filters.bedRoomMin === 0 &&  filters.bedRoomMax == 0) {
+                          if (filters.bedRoomMin === 0 &&  filters.bedRoomMax === 0) {
                             return true;
                           }
                           if(filters.bedRoomMin <= result.bedrooms && result.bedrooms <= filters.bedRoomMax) {
@@ -62,7 +62,13 @@ export const getFilteredMarker = (markersData) => {
   const listingsGeoCode = []
                
   markersData.forEach(result => {
-      listingsGeoCode.push({lat: result.geoCode.latitude, lng: result.geoCode.longitude, id: result.listingNumber})
+      listingsGeoCode.push({
+        lat: result.geoCode.latitude,
+        lng: result.geoCode.longitude,
+        id: result.listingNumber,
+        title: result.propertyMetadata.headline,
+        show: false
+      })
   });
   return listingsGeoCode;
 }
