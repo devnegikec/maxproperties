@@ -7,6 +7,7 @@ import SearchContainer from "./components/SearchContainer"
 import MapWrapper from "./components/MapWrapper"
 import { googleMapsApiConfig } from "./constant";
 
+
 function App() {
   const value = useReducer(appReducer, initialState)
   return (
@@ -21,4 +22,3 @@ function App() {
 }
 
 export default App;
-

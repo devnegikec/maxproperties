@@ -21,11 +21,12 @@ export const initialState = {
   isMapFilter: false,
   filters: filterInitialState,
   scrollToId: null,
+  mapDrawingMode: 'clear',
   mapMarkers: [],
 };
 
 export const appReducer = (state, action) => {
-  console.log("action:-", action, state.searchResult, state.filters);
+  // console.log("action:-", action, state.searchResult, state.filters);
   switch(action.type) {
     case searchActions.UPDATE_SEARCH_RESULT:
       return {...state, searchResult:  action.payload}
@@ -45,6 +46,9 @@ export const appReducer = (state, action) => {
       return {...state, showFilter: action.payload}
     case searchActions.SCROLL_TO_VIEW:
       return {...state, scrollToId: action.payload}
+    case searchActions.SET_MAP_DRAWING_MODE:
+      // console.log("SET_MAP_DRAWING_MODE:-", action.payload)
+      return {...state, mapDrawingMode: action.payload}
     case filterActions.INCREMENT_BEDROOM_MIN:
       return {...state, filters: {...state.filters, bedRoomMin: state.filters.bedRoomMin +1 }}
     case filterActions.DECREMENT_BEDROOM_MIN:

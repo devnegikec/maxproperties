@@ -9,7 +9,15 @@ import "../style/SearchContainer.css";
 
 function SearchContainer() {
     const [state, dispatch] = useContext(AppContext);
-    const {searchResult, filterResult, showFilter, isFilterActive, isMapFilter, scrollToId} = state;
+    const {
+        searchResult,
+        filterResult,
+        showFilter,
+        isFilterActive,
+        isMapFilter,
+        scrollToId,
+        mapDrawingMode
+    } = state;
     const results = (isFilterActive || isMapFilter) ? filterResult : searchResult;
     const handleFilter = () => {
         dispatch({
@@ -60,7 +68,13 @@ function SearchContainer() {
                 })
           })
       }, [])
-      
+
+      const handleMapFilter= () => {
+        // console.log("handle click on search");
+        dispatch({
+            type: searchActions.SET_MAP_DRAWING_MODE, payload: 'clear'
+        })
+      }
       return (
         <div className='left-container'>
             <div className='search-container'>
@@ -72,6 +86,7 @@ function SearchContainer() {
                     
                     <button className='filter-btn' onClick={handleFilter}>Filters</button>
                 </div>
+                {mapDrawingMode === 'drawing' ? <button onClick={handleMapFilter}>Clear Map Filter</button> : null}
                 <div className='search-categories'>
                     <div>Comp set(49)</div>
                     <div>Other properties(11)</div>

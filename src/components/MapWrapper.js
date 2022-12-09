@@ -8,12 +8,12 @@ import { googleMapsApiConfig } from "../constant"
 
 // function MapWrapper() {
 //     const { isLoaded } = useLoadScript(googleMapsApiConfig)
-//     return (isLoaded ? <Map /> : <div>Loading...</div>)
+//     return (isLoaded ? <div className="map"><Map /></div> : <div>Loading...</div>)
 // }
 
 function MapWrapper() {
     return (
-        <div class="map">
+        <div className="map">
             <Wrapper {...googleMapsApiConfig}>
                 <Map />
             </Wrapper> 

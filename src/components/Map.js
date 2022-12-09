@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useRef, useContext } from 'react'
 
 import { getStarWidth, AppContext } from "../utills"
-import { searchActions, filterActions } from "../constant"
+import { searchActions, filterActions, googleMapsApiConfig } from "../constant"
 import {
     GoogleMap,
     Marker,
@@ -9,16 +9,19 @@ import {
     DrawingManager,
 } from '@react-google-maps/api'
 
+let mapDrawingManager;
+let prevRectangle;
 function Map() {
     const [state, dispatch] = useContext(AppContext);
     const [activeMarker, setActiveMarker] = useState(null);
-    const { mapMarkers } = state;
+    const { mapMarkers, mapDrawingMode } = state;
+
     const mapRef = useRef()
     const center = useMemo(() => {
         return (mapMarkers.length > 0 ? mapMarkers[0] :{lat: 43, lng: -80})
     }, [mapMarkers])
 
-    let prevRectangle;
+    
     
     const options = useMemo(() => ({
         disabledDefaultUI: false,
@@ -26,6 +29,11 @@ function Map() {
     }), [])
 
     const onLoad = useCallback(map => (mapRef.current = map), [])
+
+    const clearSelection = () => {
+        console.log("clearSelection");
+    }
+
     const handleMarkerMouseOver = (markerId) => {
         if(markerId === activeMarker) {
             return;
@@ -61,7 +69,7 @@ function Map() {
     }
 
     const onLoadDM = drawingManager => {
-        console.log(drawingManager)
+        mapDrawingManager = drawingManager;
     }
 
     const onRectangleComplete = rectangle => {
@@ -79,7 +87,9 @@ function Map() {
                 geoCodeInsideRectangle.push(marker.id);
             }
         });
-        // console.log("geoCodeInsideRectangle:-", geoCodeInsideRectangle);
+        dispatch({
+            type: searchActions.SET_MAP_DRAWING_MODE, payload: 'drawing'
+        })
         if(geoCodeInsideRectangle.length > 0) {
             dispatch({
                 type: searchActions.UPDATE_FILTER_RESULT_MAP_ACTION, payload: geoCodeInsideRectangle
@@ -88,12 +98,18 @@ function Map() {
             dispatch({
                 type: searchActions.RESET_FILTER_RESULT_MAP_ACTION
             })
-        }
+        } 
     }
 
 
     return useMemo(() => {
-        console.log("in memo")
+        // console.log("in memo:-mapDrawingMode:-", mapDrawingMode)
+        // console.log("mapDrawingManager:-", mapDrawingManager)
+        // mapDrawingManager = drawingManager;
+        if (mapDrawingManager && prevRectangle&& mapDrawingMode === 'clear') {
+            mapDrawingManager.setDrawingMode(null);
+            prevRectangle.setMap(null)
+        }
         return (<GoogleMap
                         zoom={10}
                         center={center}
@@ -119,10 +135,10 @@ function Map() {
                                             </InfoWindow>) : null}
                             </Marker>
                         })}
-                        <DrawingManager onLoad={onLoadDM} onRectangleComplete={onRectangleComplete} />
+                        <DrawingManager onLoad={onLoadDM}  onRectangleComplete={onRectangleComplete} />
                     </GoogleMap>
                 )
-    }, [mapMarkers, activeMarker])
+    }, [mapMarkers, activeMarker, mapDrawingMode])
 }
 
 export default Map
