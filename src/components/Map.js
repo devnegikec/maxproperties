@@ -18,7 +18,7 @@ function Map() {
 
     const mapRef = useRef()
     const center = useMemo(() => {
-        return (mapMarkers.length > 0 ? mapMarkers[0] :{lat: 43, lng: -80})
+        return (mapMarkers.length > 0 ? mapMarkers[0] :{lat: 48.85657, lng: 2.33021})
     }, [mapMarkers])
 
     
@@ -111,7 +111,7 @@ function Map() {
             prevRectangle.setMap(null)
         }
         return (<GoogleMap
-                        zoom={10}
+                        zoom={12}
                         center={center}
                         mapContainerClassName='map-container'
                         options={options}

@@ -74,6 +74,9 @@ function SearchContainer() {
         dispatch({
             type: searchActions.SET_MAP_DRAWING_MODE, payload: 'clear'
         })
+        dispatch({
+            type: searchActions.RESET_FILTER_RESULT_MAP_ACTION
+        })
       }
       return (
         <div className='left-container'>
