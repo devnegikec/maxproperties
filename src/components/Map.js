@@ -40,6 +40,9 @@ function Map() {
         }
         setActiveMarker(markerId)
     }
+    const handleMarkerMouseOut = () => {
+        setActiveMarker(null)
+    }
 
     const handleMarkerClick = (markerId) => {
         dispatch({
@@ -100,8 +103,6 @@ function Map() {
             })
         } 
     }
-
-
     return useMemo(() => {
         // console.log("in memo:-mapDrawingMode:-", mapDrawingMode)
         // console.log("mapDrawingManager:-", mapDrawingManager)
@@ -125,6 +126,7 @@ function Map() {
                                 key={index}
                                 icon="./blue_icon.png"
                                 onMouseOver={() => handleMarkerMouseOver(marker.id)}
+                                onMouseOut={() => handleMarkerMouseOut(marker.id)}
                                 onClick={() => handleMarkerClick(marker.id)}
                                 >
                                 {marker.id === activeMarker ?  (<InfoWindow key={refKey}>
